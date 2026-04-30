@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pharmacy Dashboard</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        #invoice-results { background: #fff; padding: 20px; margin-top: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>My Invoices</h1>
+    <button onclick="fetchMyInvoices()">Refresh Invoices</button>
+    <div id="invoice-results">
+        <p>Click the button to fetch your data...</p>
+    </div>
+
+    <script>
+        async function fetchMyInvoices() {
+            const display = document.getElementById("invoice-results");
+            display.innerHTML = "Fetching...";
+            
+            try {
+                // This calls the Python bot you deployed on Vercel
+                const response = await fetch('/api/get_invoices');
+                const data = await response.text();
+                display.innerHTML = data;
+            } catch (error) {
+                display.innerHTML = "Error fetching data: " + error;
+            }
+        }
+    </script>
+</body>
+</html>
